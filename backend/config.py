@@ -5,10 +5,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-DB_NAME = os.getenv("DB_NAME", "flight_tracker")
-PORT = int(os.getenv("PORT", "5000"))
-CORS_ORIGINS = [o.strip() for o in os.getenv("CORS_ORIGINS", "http://localhost:5173").split(",")]
+
+def _env(name, default):
+    value = os.getenv(name)
+    if value is None or not value.strip():
+        return default
+    return value
+
+
+# Vercel has no local MongoDB. Search and predictions still work with the
+# in-memory database; set MONGO_URI to Atlas if tracked fares should persist.
+_on_vercel = os.getenv("VERCEL") == "1"
+MONGO_URI = _env("MONGO_URI", "mock" if _on_vercel else "mongodb://localhost:27017")
+DB_NAME = _env("DB_NAME", "flight_tracker")
+PORT = int(_env("PORT", "5000"))
+CORS_ORIGINS = [o.strip() for o in _env("CORS_ORIGINS", "*" if _on_vercel else "http://localhost:5173").split(",") if o.strip()]
 
 PROVIDER = os.getenv("PROVIDER", "simulated").lower()
 CHECK_INTERVAL_MIN = int(os.getenv("CHECK_INTERVAL_MIN", "15"))

@@ -1,4 +1,6 @@
 """Inference helpers: fair price, forecast curve, deal rating and buy/wait advice."""
+import os
+
 import joblib
 import pandas as pd
 
@@ -11,6 +13,8 @@ def load():
     global _bundle
     if _bundle is None:
         if not MODEL_PATH.exists():
+            if os.getenv("VERCEL"):
+                raise RuntimeError(f"Trained model not found at {MODEL_PATH}")
             print("No trained model found - training one now (about a minute)...")
             train_and_save()
         _bundle = joblib.load(MODEL_PATH)

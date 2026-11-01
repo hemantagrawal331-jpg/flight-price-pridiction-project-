@@ -19,7 +19,7 @@ async function request(path, { method = "GET", body } = {}) {
       body: body ? JSON.stringify(body) : undefined,
     });
   } catch {
-    throw new Error("Cannot reach the server. Check that the Flask API is running on port 5000.");
+    throw new Error("Cannot reach the server. Wait a moment and try again.");
   }
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
