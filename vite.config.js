@@ -5,5 +5,6 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   root: "frontend",
   plugins: [react()],
-  build: { outDir: "../dist", emptyOutDir: true },
+  // Flask on Vercel serves files in public/ and sends every other path to the API.
+  build: { outDir: "../public", emptyOutDir: true },
 });

@@ -1,14 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "vite",
-  "installCommand": "npm install",
+  "framework": "flask",
+  "installCommand": "npm install && python3 -m pip install -r requirements.txt",
   "buildCommand": "vite build",
-  "outputDirectory": "dist",
   "functions": {
-    "api/**/*.py": {
+    "wsgi.py": {
       "maxDuration": 60,
       "includeFiles": "backend/**",
-      "excludeFiles": "{node_modules/**,frontend/node_modules/**,dist/**,backend/.venv/**,backend/tests/**,**/.git/**}"
+      "excludeFiles": "{node_modules/**,frontend/**,public/**,dist/**,backend/.venv/**,backend/tests/**}"
     }
   }
 }
