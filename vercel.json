@@ -5,8 +5,8 @@
   "functions": {
     "wsgi.py": {
       "maxDuration": 60,
-      "includeFiles": "backend/**",
-      "excludeFiles": "{node_modules/**,frontend/**,public/**,dist/**,backend/.venv/**,backend/tests/**}"
+      "includeFiles": "{backend/**,public/**}",
+      "excludeFiles": "{node_modules/**,frontend/**,dist/**,backend/.venv/**,backend/tests/**}"
     }
   }
 }
